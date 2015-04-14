@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="rm.agile-board">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>Sample Agile Board</title>
+
+  <!-- Bootstrap -->
+  <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body ng-cloak>
+  <h1>Sample Agile Board</h1>
+  {{'Angular' + ' working!'}}
+
+  <!--instead of 5 in two must be model property-->
+  <div rm-agile-board one="test" two="5"></div>
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <!-- Angular -->
+  <script src="bower_components/angular/angular.js"></script>
+
+  <script src="js/agile-board.module.js"></script>
+  <script src="js/agile-board.directive.js"></script>
+</body>
+</html>
