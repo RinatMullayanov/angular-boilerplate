@@ -1,13 +1,13 @@
 {
-  "name": "ng-agile-board",
+  "name": "angular-boilerplate",
   "version": "0.0.1",
   "authors": [
     "Rinat Mullayanov <nutsgamedev@gmail.com>"
   ],
-  "description": "Agile board directive for Angular.js",
+  "description": "Angular boilerplate",
   "keywords": [
     "angular",
-    "agile"
+    "boilerplate"
   ],
   "license": "MIT",
   "ignore": [
