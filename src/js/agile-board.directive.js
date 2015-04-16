@@ -21,10 +21,17 @@
 
   }
 
-  AgileBoardController.$inject = ['$scope']; // manually identify dependencies for Angular components
-  function AgileBoardController ($scope) {
+  AgileBoardController.$inject = ['$scope', 'sampleService']; // manually identify dependencies for Angular components
+  function AgileBoardController ($scope, sampleService) {
     var vm = this;
 
-    vm.name = 'tiny';
+    sampleService.getFakeData('tmp/fakeData.json')
+      .success(function (response) {
+        vm.name = response.key;
+      })
+      .error(function (err) {
+        vm.name = 'error';
+      });
+
   }
 })();
