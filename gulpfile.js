@@ -72,7 +72,7 @@ gulp.task('watch', ['server'], function () {
   //gulp.watch(['test/app.js', 'collapseCheckbox.js'], ['js-dev']);
   //gulp.watch('template/collapseCheckbox.styl', ['css-dev']);
 
-  gulp.watch(['src/*']).on('change', function (file) {
+  gulp.watch(['src/*/**', 'src/*']).on('change', function (file) {
     // tell the browser that the file was updated
     livereloadServer.changed(file.path);
   });

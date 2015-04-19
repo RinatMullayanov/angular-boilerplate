@@ -2,13 +2,15 @@
 <html lang="en" ng-app="rm.agile-board">
 <head>
   <meta charset="utf-8">
+  <base href="/">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  <title>Sample Agile Board</title>
+  <title>Angular Boilerplate</title>
 
   <!-- Bootstrap -->
   <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/app.css"/>
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -18,11 +20,39 @@
   <![endif]-->
 </head>
 <body ng-cloak>
-  <h1>Sample Agile Board</h1>
-  {{'Angular' + ' working!'}}
+  <nav class="navbar navbar-fixed-top navbar-inverse">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="https://github.com/RinatMullayanov/angular-boilerplate">GitHub Page</a>
+      </div>
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="/home">Home</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/user/1">User ID</a></li>
+        </ul>
+      </div><!-- /.nav-collapse -->
+    </div><!-- /.container -->
+  </nav><!-- /.navbar -->
 
-  <!--instead of 5 in two must be model property-->
-  <div rm-agile-board one="test" two="5"></div>
+  <div class="container">
+    <!-- here routeProvider will be insert necessary view -->
+    <ng-view></ng-view>
+
+    <hr>
+
+    <footer>
+      <p>&copy; Rinat Mullayanov 2015</p>
+    </footer>
+
+  </div><!--/.container-->
 
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -30,8 +60,11 @@
   <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
   <!-- Angular -->
   <script src="bower_components/angular/angular.js"></script>
+  <!--Angular module provides routing service-->
+  <script src="bower_components/angular-route/angular-route.js"></script>
 
   <script src="js/agile-board.module.js"></script>
+  <script src="js/agile-board.controller.js"></script>
   <script src="js/agile-board.service.js"></script>
   <script src="js/agile-board.directive.js"></script>
 </body>
