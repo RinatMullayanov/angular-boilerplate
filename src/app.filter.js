@@ -1,6 +1,6 @@
 (function () {
   angular
-    .module('rm.agile-board')
+    .module('app')
     .filter('customFilter', customFilter);
 
   function customFilter () {

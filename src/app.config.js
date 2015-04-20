@@ -1,13 +1,10 @@
-(function (){
+(function () {
   'use strict';
-
   angular
-    .module('rm.agile-board', [
-      'ngRoute'
-    ])
+    .module('app')
     .config(configRoute);
 
-    configRoute.$inject = ['$routeProvider', '$locationProvider'];
+  configRoute.$inject = ['$routeProvider', '$locationProvider'];
 
   function configRoute ($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true); // to remove the extra # in url
@@ -31,7 +28,7 @@
       controllerAs: 'vm'
     });
     //$routeProvider.when('/search', {
-    //  templateUrl: 'modules/search/view/search.html',
+    //  templateUrl: 'features/search/view/search.html',
     //  reloadOnSearch: false
     //});
     $routeProvider.otherwise({
@@ -39,3 +36,4 @@
     });
   }
 })();
+

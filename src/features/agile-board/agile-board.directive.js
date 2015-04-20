@@ -11,7 +11,7 @@
         demoOneWayTextBinding: '@one',
         demoTwoWayBinding: '=two'
       },
-      templateUrl: 'template/agile-board.html',
+      templateUrl: 'features/agile-board/agile-board.html',
       restrict: 'EA',
       controller: AgileBoardController,
       controllerAs: 'vm', // name of the controller to use to access the properties in the markup directive

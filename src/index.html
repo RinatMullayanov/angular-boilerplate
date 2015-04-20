@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="rm.agile-board">
+<html lang="en" ng-app="app">
 <head>
   <meta charset="utf-8">
   <base href="/">
@@ -62,11 +62,14 @@
   <script src="bower_components/angular/angular.js"></script>
   <!--Angular module provides routing service-->
   <script src="bower_components/angular-route/angular-route.js"></script>
-
-  <script src="js/agile-board.module.js"></script>
-  <script src="js/agile-board.controller.js"></script>
-  <script src="js/agile-board.service.js"></script>
-  <script src="js/agile-board.directive.js"></script>
-  <script src="js/agile-board.filter.js"></script>
+  <!--Core App module-->
+  <script src="app.module.js"></script>
+  <script src="app.controller.js"></script>
+  <script src="app.config.js"></script>
+  <script src="app.filter.js"></script>
+  <!--Custom features-->
+  <script src="features/agile-board/agile-board.module.js"></script>
+  <script src="features/agile-board/agile-board.service.js"></script>
+  <script src="features/agile-board/agile-board.directive.js"></script>
 </body>
 </html>

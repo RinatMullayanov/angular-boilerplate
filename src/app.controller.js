@@ -1,6 +1,6 @@
 (function () {
   angular
-    .module('rm.agile-board')
+    .module('app')
     .controller('SomeController', SomeController);
 
   SomeController.$inject = ['$scope', '$location', '$routeParams'];
