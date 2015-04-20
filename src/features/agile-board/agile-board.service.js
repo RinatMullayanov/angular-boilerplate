@@ -7,10 +7,10 @@
   sampleService.$inject = ['$http'];
   function sampleService ($http) {
     return {
-      getFakeData: getFakeData
+      getTasks: getTasks
     };
 
-    function getFakeData(path) {
+    function getTasks(path) {
       return $http.get(path);
     }
   }

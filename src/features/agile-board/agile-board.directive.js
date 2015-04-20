@@ -21,17 +21,46 @@
 
   }
 
-  AgileBoardController.$inject = ['$scope', 'sampleService']; // manually identify dependencies for Angular components
-  function AgileBoardController ($scope, sampleService) {
+  AgileBoardController.$inject = ['$scope', 'sampleService', 'loggerService']; // manually identify dependencies for Angular components
+  function AgileBoardController ($scope, sampleService, loggerService) {
     var vm = this;
 
-    sampleService.getFakeData('tmp/fakeData.json')
+    vm.updateTask = updateTask;
+
+    sampleService.getTasks('tmp/tasks.json')
       .success(function (response) {
-        vm.name = response.key;
+        vm.tasks = response.tasks;
+
+        dragula([submitted_column, open_column, in_progress_column, fixed_column], {
+          moves: function (el, container, handle) {
+            loggerService.log('moves: ' + el + ' ' + container.id + ' ' +  handle);
+            return true;         // elements are always draggable by default
+          },
+          accepts: function (el, target, source, sibling) {
+            loggerService.log('accepts: ' + el + ' from:' + target.id + ' to: ' + source.id);
+            return true;         // elements are always draggable by default
+          }
+          }).on('drop', function (el, container, source) {
+            // here we can handle
+            var currentTask = angular.element(el).scope().task;
+            var newStatus = container.id.replace('_column', '').replace('_', ' ');
+            vm.updateTask(currentTask, { status : newStatus})
+            loggerService.log('drop: ' + el + ' from:' + source.id + ' to: ' + container.id);
+        });
       })
       .error(function (err) {
-        vm.name = 'error';
+        loggerService.log('error: ' + err);
       });
 
+    function updateTask(oldTask, changes) {
+      loggerService.log('old task: ' + JSON.stringify(oldTask));
+      for (var prop in changes) {
+        if (changes.hasOwnProperty(prop)) {
+          oldTask[prop] = changes[prop];
+        }
+      }
+      loggerService.log('new task: ' + JSON.stringify(oldTask));
+      // here will be invoke service method for update task in the database
+    }
   }
 })();

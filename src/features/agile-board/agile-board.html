@@ -1,1 +1,71 @@
-<p>It's {{vm.name}} directive, {{vm.demoOneWayTextBinding}}, {{vm.demoTwoWayBinding}}</p>
+<table class="table">
+    <caption>Agile Board</caption>
+    <thead>
+    <tr>
+        <th>Submitted</th>
+        <th>Open</th>
+        <th>In Progress</th>
+        <th>Fixed</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td id="submitted_column" class="agile-board__column">
+            <div class="agile-board__task" ng-repeat="task in vm.tasks | filter:{ status:'submitted' }">
+                <div class="agile-board__task-title">
+                    <a class="agile-board__task-ref" href="/tasks/{{task.id}}">{{task.id}}</a> <span class="agile-board__task-title-separator"></span> {{task.priority}}
+                </div>
+                <div class="agile-board__task-header">
+                    {{task.header}}
+                </div>
+                <div class="agile-board__task-descr">
+                    {{task.description}}
+                </div>
+                <hr/>
+            </div>
+        </td>
+        <td id="open_column" class="agile-board__column">
+            <div class="agile-board__task" ng-repeat="task in vm.tasks | filter:{ status:'open' }">
+                <div class="agile-board__task-title">
+                    <a class="agile-board__task-ref" href="/tasks/{{task.id}}">{{task.id}}</a> <span class="agile-board__task-title-separator"></span> {{task.priority}}
+                </div>
+                <div class="agile-board__task-header">
+                    {{task.header}}
+                </div>
+                <div class="agile-board__task-descr">
+                    {{task.description}}
+                </div>
+                <hr/>
+            </div>
+        </td>
+        <td id="in_progress_column" class="agile-board__column">
+            <div class="agile-board__task" ng-repeat="task in vm.tasks | filter:{ status:'in progress' }">
+                <div class="agile-board__task-title">
+                    <a class="agile-board__task-ref" href="/tasks/{{task.id}}">{{task.id}}</a> <span class="agile-board__task-title-separator"></span> {{task.priority}}
+                </div>
+                <div class="agile-board__task-header">
+                    {{task.header}}
+                </div>
+                <div class="agile-board__task-descr">
+                    {{task.description}}
+                </div>
+                <hr/>
+            </div>
+        </td>
+        <td id="fixed_column" class="agile-board__column">
+            <div class="agile-board__task" ng-repeat="task in vm.tasks | filter:{ status:'fixed' }">
+                <div class="agile-board__task-title">
+                    <a class="agile-board__task-ref" href="/tasks/{{task.id}}">{{task.id}}</a> <span class="agile-board__task-title-separator"></span> {{task.priority}}
+                </div>
+                <div class="agile-board__task-header">
+                    {{task.header}}
+                </div>
+                <div class="agile-board__task-descr">
+                    {{task.description}}
+                </div>
+                <hr/>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
