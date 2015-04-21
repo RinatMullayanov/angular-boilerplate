@@ -10,6 +10,15 @@
     </thead>
     <tbody>
     <tr>
+        <td colspan="4">
+            <div class="agile-board__menu">
+                <span class="glyphicon glyphicon-plus agile-board__menu-item" ></span>
+                <span class="glyphicon glyphicon-pencil agile-board__menu-item"></span>
+                <span class="glyphicon glyphicon-trash agile-board__menu-item"></span>
+            </div>
+        </td>
+    </tr>
+    <tr>
         <td id="submitted_column" class="agile-board__column">
             <div class="agile-board__task" ng-repeat="task in vm.tasks | filter:{ status:'submitted' }">
                 <div class="agile-board__task-title">

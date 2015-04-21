@@ -5,6 +5,15 @@
     width: 400px;
 }
 
+.agile-board__menu {
+    float: right;
+}
+
+.agile-board__menu-item {
+    cursor: pointer;
+    margin-left: 5px;
+}
+
 .agile-board__task {
     margin-top: 7px;
     background-color: white;
