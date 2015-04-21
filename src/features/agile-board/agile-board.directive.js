@@ -24,7 +24,16 @@
   AgileBoardController.$inject = ['$scope', '$modal', 'sampleService', 'loggerService']; // manually identify dependencies for Angular components
   function AgileBoardController ($scope, $modal, sampleService, loggerService) {
     var vm = this;
-
+    vm.tmp = 'someId'
+    vm.columns = [{
+        name:'submitted_column'
+      }, {
+        name:'open_column'
+      }, {
+        name:'in_progress_column'
+      }, {
+        name:'fixed_column'
+    }];
     vm.updateTask = updateTask;
     vm.openModal = openModal;
 
