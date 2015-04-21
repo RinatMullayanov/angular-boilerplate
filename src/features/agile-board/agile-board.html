@@ -1,3 +1,23 @@
+<!--view for modal windows-->
+<div>
+    <script type="text/ng-template" id="agile-board__task-model.html">
+        <div class="modal-header">
+            <h3 class="modal-title">I'm a modal!</h3>
+        </div>
+        <div class="modal-body">
+            <ul>
+                <li ng-repeat="item in vm.items">
+                    <a ng-click="vm.selected.item = item">{{ item }}</a>
+                </li>
+            </ul>
+            Selected: <b>{{ vm.selected.item }}</b>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="vm.ok()">OK</button>
+            <button class="btn btn-warning" ng-click="vm.cancel()">Cancel</button>
+        </div>
+    </script>
+</div>
 <table class="table">
     <caption>Agile Board</caption>
     <thead>
@@ -12,7 +32,7 @@
     <tr>
         <td colspan="4">
             <div class="agile-board__menu">
-                <span class="glyphicon glyphicon-plus agile-board__menu-item" ></span>
+                <span class="glyphicon glyphicon-plus agile-board__menu-item" ng-click="vm.openModal()"></span>
                 <span class="glyphicon glyphicon-pencil agile-board__menu-item"></span>
                 <span class="glyphicon glyphicon-trash agile-board__menu-item"></span>
             </div>

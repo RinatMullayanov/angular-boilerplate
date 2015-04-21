@@ -21,11 +21,15 @@
 
   }
 
-  AgileBoardController.$inject = ['$scope', 'sampleService', 'loggerService']; // manually identify dependencies for Angular components
-  function AgileBoardController ($scope, sampleService, loggerService) {
+  AgileBoardController.$inject = ['$scope', '$modal', 'sampleService', 'loggerService']; // manually identify dependencies for Angular components
+  function AgileBoardController ($scope, $modal, sampleService, loggerService) {
     var vm = this;
 
     vm.updateTask = updateTask;
+
+    vm.temp = ['item1', 'item2', 'item3'];
+
+    vm.openModal = openModal;
 
     sampleService.getTasks('tmp/tasks.json')
       .success(function (response) {
@@ -62,5 +66,27 @@
       loggerService.log('new task: ' + JSON.stringify(oldTask));
       // here will be invoke service method for update task in the database
     }
+
+    function openModal (size) {
+      var modalInstance = $modal.open({
+        templateUrl: 'agile-board__task-model.html',
+        controller: 'TaskModalController',
+        controllerAs: 'vm',
+        size: size,
+        // members that will be resolved and passed to the controller as locals
+        resolve: {
+          items: function () {
+            return vm.temp;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (selectedItem) {
+        // here added logic - what to do when you close the modal window
+        vm.selected = selectedItem;
+      }, function () {
+        loggerService.log('Modal dismissed at: ' + new Date());
+      });
+    };
   }
 })();
