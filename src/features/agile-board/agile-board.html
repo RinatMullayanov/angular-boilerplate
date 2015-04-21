@@ -2,15 +2,19 @@
 <div>
     <script type="text/ng-template" id="agile-board__task-model.html">
         <div class="modal-header">
-            <h3 class="modal-title">I'm a modal!</h3>
+            <h3 class="modal-title">Create\Edit Task</h3>
         </div>
         <div class="modal-body">
-            <ul>
-                <li ng-repeat="item in vm.items">
-                    <a ng-click="vm.selected.item = item">{{ item }}</a>
-                </li>
-            </ul>
-            Selected: <b>{{ vm.selected.item }}</b>
+            <form>
+                <div class="form-group">
+                    <label for="headerInput">Header</label>
+                    <input type="text" class="form-control" id="headerInput" placeholder="Enter header" ng-model="vm.task.header">
+                </div>
+                <div class="form-group">
+                    <label for="descriptionInput">Description</label>
+                    <textarea class="form-control" rows="3" id="descriptionInput" placeholder="Enter Description" ng-model="vm.task.description"></textarea>
+                </div>
+            </form>
         </div>
         <div class="modal-footer">
             <button class="btn btn-primary" ng-click="vm.ok()">OK</button>
@@ -33,16 +37,19 @@
         <td colspan="4">
             <div class="agile-board__menu">
                 <span class="glyphicon glyphicon-plus agile-board__menu-item" ng-click="vm.openModal()"></span>
-                <span class="glyphicon glyphicon-pencil agile-board__menu-item"></span>
-                <span class="glyphicon glyphicon-trash agile-board__menu-item"></span>
+                <!--<span class="glyphicon glyphicon-pencil agile-board__menu-item" ></span>-->
+                <!--<span class="glyphicon glyphicon-trash agile-board__menu-item"></span>-->
             </div>
         </td>
     </tr>
     <tr>
         <td id="submitted_column" class="agile-board__column">
-            <div class="agile-board__task" ng-repeat="task in vm.tasks | filter:{ status:'submitted' }">
+            <div ng-repeat="task in vm.tasks | filter:{ status:'submitted' }" class="agile-board__task">
                 <div class="agile-board__task-title">
-                    <a class="agile-board__task-ref" href="/tasks/{{task.id}}">{{task.id}}</a> <span class="agile-board__task-title-separator"></span> {{task.priority}}
+                        <a class="agile-board__task-ref" href="/tasks/{{task.id}}">{{task.id}}</a> <span class="agile-board__task-title-separator"></span> {{task.priority}}
+                        <button class="agile-board__task-edit-btn">
+                            <span class="glyphicon glyphicon-pencil" ng-click="vm.openModal(task)" ></span>
+                        </button>
                 </div>
                 <div class="agile-board__task-header">
                     {{task.header}}
@@ -54,9 +61,12 @@
             </div>
         </td>
         <td id="open_column" class="agile-board__column">
-            <div class="agile-board__task" ng-repeat="task in vm.tasks | filter:{ status:'open' }">
+            <div ng-repeat="task in vm.tasks | filter:{ status:'open' }" class="agile-board__task">
                 <div class="agile-board__task-title">
                     <a class="agile-board__task-ref" href="/tasks/{{task.id}}">{{task.id}}</a> <span class="agile-board__task-title-separator"></span> {{task.priority}}
+                    <button class="agile-board__task-edit-btn">
+                        <span class="glyphicon glyphicon-pencil" ng-click="vm.openModal(task)" ></span>
+                    </button>
                 </div>
                 <div class="agile-board__task-header">
                     {{task.header}}
@@ -68,9 +78,12 @@
             </div>
         </td>
         <td id="in_progress_column" class="agile-board__column">
-            <div class="agile-board__task" ng-repeat="task in vm.tasks | filter:{ status:'in progress' }">
+            <div ng-repeat="task in vm.tasks | filter:{ status:'in progress' }" class="agile-board__task">
                 <div class="agile-board__task-title">
                     <a class="agile-board__task-ref" href="/tasks/{{task.id}}">{{task.id}}</a> <span class="agile-board__task-title-separator"></span> {{task.priority}}
+                    <button class="agile-board__task-edit-btn">
+                        <span class="glyphicon glyphicon-pencil" ng-click="vm.openModal(task)" ></span>
+                    </button>
                 </div>
                 <div class="agile-board__task-header">
                     {{task.header}}
@@ -82,9 +95,12 @@
             </div>
         </td>
         <td id="fixed_column" class="agile-board__column">
-            <div class="agile-board__task" ng-repeat="task in vm.tasks | filter:{ status:'fixed' }">
+            <div ng-repeat="task in vm.tasks | filter:{ status:'fixed' }" class="agile-board__task">
                 <div class="agile-board__task-title">
                     <a class="agile-board__task-ref" href="/tasks/{{task.id}}">{{task.id}}</a> <span class="agile-board__task-title-separator"></span> {{task.priority}}
+                    <button class="agile-board__task-edit-btn">
+                        <span class="glyphicon glyphicon-pencil" ng-click="vm.openModal(task)" ></span>
+                    </button>
                 </div>
                 <div class="agile-board__task-header">
                     {{task.header}}

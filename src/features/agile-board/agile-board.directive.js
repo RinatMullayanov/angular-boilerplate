@@ -26,9 +26,6 @@
     var vm = this;
 
     vm.updateTask = updateTask;
-
-    vm.temp = ['item1', 'item2', 'item3'];
-
     vm.openModal = openModal;
 
     sampleService.getTasks('tmp/tasks.json')
@@ -67,7 +64,7 @@
       // here will be invoke service method for update task in the database
     }
 
-    function openModal (size) {
+    function openModal (currentTask, size) {
       var modalInstance = $modal.open({
         templateUrl: 'agile-board__task-model.html',
         controller: 'TaskModalController',
@@ -75,18 +72,30 @@
         size: size,
         // members that will be resolved and passed to the controller as locals
         resolve: {
-          items: function () {
-            return vm.temp;
+          task: function () {
+            return !!currentTask
+              ? currentTask
+              : {
+                  id: '2000',
+                  header:'Моя новая задача',
+                  description: 'Описание моей новой задачи',
+                  status: 'submitted',
+                  priority:'normal',
+                  _isNew: true // mark the task as a new
+              };
           }
         }
       });
 
-      modalInstance.result.then(function (selectedItem) {
+      modalInstance.result.then(function (task) {
         // here added logic - what to do when you close the modal window
-        vm.selected = selectedItem;
+        if(task._isNew) {
+          delete  task._isNew;
+          vm.tasks.push(task);
+        }
       }, function () {
         loggerService.log('Modal dismissed at: ' + new Date());
       });
-    };
+    }
   }
 })();

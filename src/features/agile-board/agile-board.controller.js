@@ -3,16 +3,16 @@
     .module('rm.agile-board')
     .controller('TaskModalController', TaskModalController);
 
-  TaskModalController.$inject = ['$scope', '$modalInstance', 'items'];
-  function TaskModalController ($scope, $modalInstance, items) {
+  TaskModalController.$inject = ['$scope', '$modalInstance', 'task'];
+  function TaskModalController ($scope, $modalInstance, task) {
     var vm = this;
-    vm.items = items;
-    vm.selected = {
-      item: vm.items[0]
-    };
+    vm.task = {};
+    angular.copy(task, vm.task);
 
     vm.ok = function () {
-      $modalInstance.close(vm.selected.item);
+      // commit change
+      angular.copy(vm.task, task);
+      $modalInstance.close(task);
     };
 
     vm.cancel = function () {
