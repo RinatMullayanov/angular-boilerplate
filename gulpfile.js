@@ -16,7 +16,9 @@ var config = {
   port: 8237,
   status: 'dev',
   liveReloadPort: 35729,
-  siteDir: 'src'
+  siteDir: 'src',
+  stylusPath: ['./src/css/*.styl', './src/features/*/*.styl'],
+  cssRootPath: './src/css/'
 };
 var livereloadServer;
 
@@ -36,11 +38,24 @@ gulp.task('js-dev', function () {
 });
 
 gulp.task('css-dev', function () {
-  //gulp.src('template/collapseCheckbox.styl')
-  //  .pipe(stylus())
-  //  .pipe(rename('collapseCheckbox.css'))
-  //  .pipe(autoprefixer())
-  //  .pipe(gulp.dest('test/css/'));
+  gulp.src(config.stylusPath, function (er, files) {
+    // files is an array of filenames.
+    // If the `nonull` option is set, and nothing
+    // was found, then files is ["**/*.js"]
+    // er is an error object or null.
+    console.log(files);
+  })
+  //.pipe(concat('app.styl')) // first concat in one file that mixins to be globally visible
+  .pipe(stylus())
+  .pipe(rename(function (path) {
+    //path.dirname += "/ciao";
+    //path.basename += "-goodbye";
+    path.extname = '.css';
+  }))
+  .pipe(autoprefixer())
+  .pipe(gulp.dest(function(file) {
+    return file.base;
+  }));
 });
 
 gulp.task('js-prod', function () {
@@ -55,22 +70,23 @@ gulp.task('js-prod', function () {
 });
 
 gulp.task('css-prod', function () {
-  //gulp.src('template/collapseCheckbox.styl')
-  //  .pipe(stylus())
-  //  .pipe(rename('collapseCheckbox.css'))
-  //  .pipe(autoprefixer())
-  //  .pipe(gulp.dest('../dist/css/'));
-  //
-  //gulp.src('template/collapseCheckbox.styl')
-  //  .pipe(stylus({compress: true}))
-  //  .pipe(rename('collapseCheckbox.min.css'))
-  //  .pipe(autoprefixer())
-  //  .pipe(gulp.dest('../dist/css/'));
+  gulp.src(config.stylusPath, function (er, files) {
+    // files is an array of filenames.
+    // If the `nonull` option is set, and nothing
+    // was found, then files is ["**/*.js"]
+    // er is an error object or null.
+    console.log(files);
+  })
+  .pipe(concat('app.styl')) // first concat in one file that mixins to be globally visible
+  .pipe(stylus({compress: true}))
+  .pipe(rename('app.min.css'))
+  .pipe(autoprefixer())
+  .pipe(gulp.dest(config.cssRootPath));
 });
 
 gulp.task('watch', ['server'], function () {
   //gulp.watch(['test/app.js', 'collapseCheckbox.js'], ['js-dev']);
-  //gulp.watch('template/collapseCheckbox.styl', ['css-dev']);
+  gulp.watch(config.stylusPath, ['css-dev']);
 
   gulp.watch(['src/*/**', 'src/*']).on('change', function (file) {
     // tell the browser that the file was updated
