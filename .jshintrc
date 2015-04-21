@@ -27,6 +27,7 @@
   "globals": {
     "module": true,
     "require" : true,
-    "angular" : true
+    "angular" : true,
+    "dragula" : true
   }
 }

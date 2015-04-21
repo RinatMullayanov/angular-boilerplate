@@ -1,6 +1,6 @@
 /*naming like BEM*/
 .agile-board__column {
-    background: url('/features/agile-board/sweemline-bg.png') repeat 0 0;
+    background: url('/features/agile-board/grid.png') repeat 0 0;
     border-left: 9px solid #fff;
     width: 400px;
 }
@@ -22,18 +22,20 @@
     cursor: move;
 }
 
+.agile-board__task-btn-container {
+    float: right;
+}
+
 .agile-board__task-edit-btn {
     padding: 0;
-    float: right;
-    margin: 0;
+    margin-left: 5px;
     background: none;
     border: none;
 }
 
 .agile-board__task-edit-btn:hover {
     padding: 0;
-    float: right;
-    margin: 0;
+    margin-left: 5px;
     background: none;
     border: none;
     color: red;

@@ -24,18 +24,22 @@
   AgileBoardController.$inject = ['$scope', '$modal', 'sampleService', 'loggerService']; // manually identify dependencies for Angular components
   function AgileBoardController ($scope, $modal, sampleService, loggerService) {
     var vm = this;
-    vm.tmp = 'someId'
     vm.columns = [{
-        name:'submitted_column'
+        id: 'submitted_column',
+        title: 'Submitted'
       }, {
-        name:'open_column'
+        id: 'open_column',
+        title: 'Open'
       }, {
-        name:'in_progress_column'
+        id: 'in_progress_column',
+        title: 'In progress'
       }, {
-        name:'fixed_column'
+        id: 'fixed_column',
+        title: 'Fixed'
     }];
     vm.updateTask = updateTask;
     vm.openModal = openModal;
+    vm.deleteTask = deleteTask;
 
     sampleService.getTasks('tmp/tasks.json')
       .success(function (response) {
@@ -105,6 +109,13 @@
       }, function () {
         loggerService.log('Modal dismissed at: ' + new Date());
       });
+    }
+
+    function deleteTask(selectedTask) {
+      var index = vm.tasks.indexOf(selectedTask);
+      if (index > -1) {
+        vm.tasks.splice(index, 1);
+      }
     }
   }
 })();
