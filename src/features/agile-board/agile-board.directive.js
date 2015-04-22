@@ -5,7 +5,7 @@
     .module('rm.agile-board')
     .directive('rmAgileBoard', agileBoard);
 
-  function agileBoard() {
+  function agileBoard () {
     var directive = {
       scope: {
         demoOneWayTextBinding: '@one',
@@ -46,11 +46,10 @@
     vm.deleteTask = deleteTask;
 
     vm.onDragStart = function(data, dragElement, event) {
-
+      data._isSelected = true;
     };
 
     vm.onDragEnd = function(data, dragElement, event) {
-
     };
 
     vm.onDragOver = function(data, dragElement, event) {
@@ -59,6 +58,7 @@
 
     vm.onDrop = function(data, dragElement, dropElement, event) {
       if (data) {
+        data._isSelected = false;
         var currentTask = angular.element(dragElement.el).scope().task;
         currentTask.status = +dropElement.el[0].dataset.status;
         //$scope.models.basket.push(data);
@@ -73,30 +73,13 @@
         var columnElementsById = [];
         vm.columns.forEach(function(column) {
           columnElementsById.push(document.getElementById(column.id));
-        })
-
-        //dragula(columnElementsById, {
-        //  moves: function (el, container, handle) {
-        //    loggerService.log('moves: ' + el + ' ' + container.id + ' ' +  handle);
-        //    return true;         // elements are always draggable by default
-        //  },
-        //  accepts: function (el, target, source, sibling) {
-        //    loggerService.log('accepts: ' + el + ' from:' + target.id + ' to: ' + source.id);
-        //    return true;         // elements are always draggable by default
-        //  }
-        //  }).on('drop', function (el, container, source) {
-        //    // here we can handle
-        //    var currentTask = angular.element(el).scope().task;
-        //    var newStatus = container.id.replace('_column', '').replace('_', ' ');
-        //    vm.updateTask(currentTask, { status : newStatus})
-        //    loggerService.log('drop: ' + el + ' from:' + source.id + ' to: ' + container.id);
-        //});
+        });
       })
       .error(function (err) {
         loggerService.log('error: ' + err);
       });
 
-    function updateTask(oldTask, changes) {
+    function updateTask (oldTask, changes) {
       loggerService.log('old task: ' + JSON.stringify(oldTask));
       for (var prop in changes) {
         if (changes.hasOwnProperty(prop)) {
@@ -123,8 +106,8 @@
                   header:'Моя новая задача',
                   description: 'Описание моей новой задачи',
                   status: 0,
-                  "statusDescr" : "submitted",
-                  priority:'normal',
+                  'statusDescr' : 'submitted',
+                  priority: 'normal',
                   _isNew: true // mark the task as a new
               };
           }
@@ -142,7 +125,7 @@
       });
     }
 
-    function deleteTask(selectedTask) {
+    function deleteTask (selectedTask) {
       var index = vm.tasks.indexOf(selectedTask);
       if (index > -1) {
         vm.tasks.splice(index, 1);

@@ -11,6 +11,10 @@
   background: url('grid.png') repeat 0 0;
   border-left: 9px solid #fff;
   width: 400px;
+  padding-top: 5px !important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  padding-top: 5px !important;
 }
 
 .agile-board__menu {
@@ -28,20 +32,28 @@
   background-color: white;
   border: 1px solid #b4b4b4;
   cursor: move;
+  &_disable {
+    border: 0;
+  }
 }
 
 .agile-board__task-btn-container {
   float: right;
+  padding-top: 3px;
+  padding-right: 5px;
+  &_disable {
+    display : none;
+  }
 }
 
 .agile-board__task-edit-btn {
-  padding: 0;
-  margin-left: 5px;
-  background: none;
-  color: none;
-  border: none;
-  cursor: pointer;
-}
+   padding: 0;
+   margin-left: 5px;
+   background: none;
+   color: none;
+   border: none;
+   cursor: pointer;
+ }
 
 .agile-board__task-edit-btn:hover {
   padding: 0;

@@ -40,36 +40,35 @@
         </td>
     </tr>
     <tr class="agile-board__container">
-        <td id="{{column.id}}" class="agile-board__column"
+        <td id="{{column.id}}" class="agile-board__column" ng-repeat="column in vm.columns" data-status ="{{column.status}}"
             ad-drop="true"
             ad-drop-over="vm.onDragOver($data, $dragElement, $dropElement, $event);"
-            ad-drop-end="vm.onDrop($data, $dragElement, $dropElement, $event);"
-            data-status ="{{column.status}}"
-            ng-repeat="column in vm.columns">
-            <div
-                ad-drag="true"
-                ad-drag-data="task"
-                ad-drag-begin="vm.onDragStart($data, $dragElement, $event);"
-                ad-drag-end="vm.onDataEnd($data, $dragElement, $event);"
-                ng-repeat="task in vm.tasks | filter:{ status: column.status }" class="agile-board__task">
-                <div class="agile-board__task-title">
-                    <a class="agile-board__task-ref" href="/tasks/{{task.id}}">{{task.id}}</a> <span class="agile-board__task-title-separator"></span> {{task.priority}}
-                    <div class="agile-board__task-btn-container">
-                        <button type="button" class="agile-board__task-edit-btn" ng-click="vm.openModal(task)" >
-                            <span class="glyphicon glyphicon-pencil" ></span>
-                        </button>
-                        <button type="button"  class="agile-board__task-edit-btn" ng-click="vm.deleteTask(task)">
-                            <span class="glyphicon glyphicon-trash"  ></span>
-                        </button>
+            ad-drop-end="vm.onDrop($data, $dragElement, $dropElement, $event);">
+            <div ng-repeat="task in vm.tasks | filter:{ status: column.status }" ng-class="task._isSelected ? 'agile-board__task_disable' : 'agile-board__task'">
+                <div  ng-class="task._isSelected ? 'agile-board__task-btn-container_disable' : 'agile-board__task-btn-container'">
+                    <button type="button" class="agile-board__task-edit-btn" ng-click="vm.openModal(task)" >
+                        <span class="glyphicon glyphicon-pencil" ></span>
+                    </button>
+                    <button type="button"  class="agile-board__task-edit-btn" ng-click="vm.deleteTask(task)">
+                        <span class="glyphicon glyphicon-trash"  ></span>
+                    </button>
+                </div>
+                <div
+                    ad-drag="true"
+                    ad-drag-data="task"
+                    ad-drag-begin="vm.onDragStart($data, $dragElement, $event);"
+                    ad-drag-end="vm.onDataEnd($data, $dragElement, $event);">
+                    <div class="agile-board__task-title">
+                        <a class="agile-board__task-ref" href="/tasks/{{task.id}}">{{task.id}}</a> <span class="agile-board__task-title-separator"></span> {{task.priority}}
                     </div>
+                    <div class="agile-board__task-header">
+                        {{task.header}}
+                    </div>
+                    <div class="agile-board__task-descr">
+                        {{task.description}}
+                    </div>
+                    <hr/>
                 </div>
-                <div class="agile-board__task-header">
-                    {{task.header}}
-                </div>
-                <div class="agile-board__task-descr">
-                    {{task.description}}
-                </div>
-                <hr/>
             </div>
         </td>
     </tr>
