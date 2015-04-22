@@ -45,7 +45,12 @@
       .success(function (response) {
         vm.tasks = response.tasks;
 
-        dragula([submitted_column, open_column, in_progress_column, fixed_column], {
+        var columnElementsById = [];
+        vm.columns.forEach(function(column) {
+          columnElementsById.push(document.getElementById(column.id));
+        })
+
+        dragula(columnElementsById, {
           moves: function (el, container, handle) {
             loggerService.log('moves: ' + el + ' ' + container.id + ' ' +  handle);
             return true;         // elements are always draggable by default
