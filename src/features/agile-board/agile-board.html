@@ -40,7 +40,7 @@
         </td>
     </tr>
     <tr class="agile-board__container">
-        <td id="{{column.id}}" class="agile-board__column" ng-repeat="column in vm.columns" data-status ="{{column.status}}"
+        <td id="{{column.id}}" class="agile-board__column" ng-repeat="column in vm.columns" data-status ="{{column.status}}" data-statusdescr ="{{column.statusDescr}}"
             ad-drop="true"
             ad-drop-over="vm.onDragOver($data, $dragElement, $dropElement, $event);"
             ad-drop-end="vm.onDrop($data, $dragElement, $dropElement, $event);">

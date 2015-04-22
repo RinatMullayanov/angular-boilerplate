@@ -4,9 +4,11 @@
     .module('app')
     .config(configRoute);
 
-  configRoute.$inject = ['$routeProvider', '$locationProvider'];
+  configRoute.$inject = ['$routeProvider', '$locationProvider', '$logProvider'];
 
-  function configRoute ($routeProvider, $locationProvider) {
+  function configRoute ($routeProvider, $locationProvider, $logProvider) {
+    //$logProvider.debugEnabled(false); // for disable $log.log()
+
     $locationProvider.html5Mode(true); // to remove the extra # in url
     //
     //$routeProvider.when('/', {

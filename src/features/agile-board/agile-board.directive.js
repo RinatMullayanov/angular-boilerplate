@@ -21,25 +21,29 @@
 
   }
 
-  AgileBoardController.$inject = ['$scope', '$modal', 'sampleService', 'loggerService']; // manually identify dependencies for Angular components
-  function AgileBoardController ($scope, $modal, sampleService, loggerService) {
+  AgileBoardController.$inject = ['$scope', '$modal', '$log', 'sampleService']; // manually identify dependencies for Angular components
+  function AgileBoardController ($scope, $modal, $log, sampleService) {
     var vm = this;
     vm.columns = [{
         id: 'submitted_column',
         title: 'Submitted',
-        status: 0
+        status: 0,
+        statusDescr : 'submitted'
       }, {
         id: 'open_column',
         title: 'Open',
-        status: 1
+        status: 1,
+        statusDescr : 'open'
       }, {
         id: 'in_progress_column',
         title: 'In progress',
-        status: 2
+        status: 2,
+        statusDescr: 'in progress'
       }, {
         id: 'fixed_column',
         title: 'Fixed',
-        status: 3
+        status: 3,
+        statusDescr: 'fixed'
     }];
     vm.updateTask = updateTask;
     vm.openModal = openModal;
@@ -60,7 +64,10 @@
       if (data) {
         data._isSelected = false;
         var currentTask = angular.element(dragElement.el).scope().task;
-        currentTask.status = +dropElement.el[0].dataset.status;
+        vm.updateTask(currentTask, {
+          status: +dropElement.el[0].dataset.status,
+          statusDescr: dropElement.el[0].dataset.statusdescr
+        });
         //$scope.models.basket.push(data);
         //$scope.remove($scope.models.cars, data);
       }
@@ -76,17 +83,17 @@
         });
       })
       .error(function (err) {
-        loggerService.log('error: ' + err);
+          $log.log('error: ' + err);
       });
 
     function updateTask (oldTask, changes) {
-      loggerService.log('old task: ' + JSON.stringify(oldTask));
+      $log.log('old task: ' + JSON.stringify(oldTask));
       for (var prop in changes) {
         if (changes.hasOwnProperty(prop)) {
           oldTask[prop] = changes[prop];
         }
       }
-      loggerService.log('new task: ' + JSON.stringify(oldTask));
+      $log.log('new task: ' + JSON.stringify(oldTask));
       // here will be invoke service method for update task in the database
     }
 
@@ -121,7 +128,7 @@
           vm.tasks.push(task);
         }
       }, function () {
-        loggerService.log('Modal dismissed at: ' + new Date());
+          $log.log('Modal dismissed at: ' + new Date());
       });
     }
 
