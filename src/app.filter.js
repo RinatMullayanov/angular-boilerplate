@@ -4,7 +4,8 @@
     .filter('customFilter', customFilter);
 
   function customFilter () {
-    return function (input) {
+    // customFilter(param)
+    return function (input, param) {
       return input ? '\u2713' : '\u2718'; //tick or cross
     };
   }
