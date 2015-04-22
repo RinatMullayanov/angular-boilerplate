@@ -26,20 +26,45 @@
     var vm = this;
     vm.columns = [{
         id: 'submitted_column',
-        title: 'Submitted'
+        title: 'Submitted',
+        status: 0
       }, {
         id: 'open_column',
-        title: 'Open'
+        title: 'Open',
+        status: 1
       }, {
         id: 'in_progress_column',
-        title: 'In progress'
+        title: 'In progress',
+        status: 2
       }, {
         id: 'fixed_column',
-        title: 'Fixed'
+        title: 'Fixed',
+        status: 3
     }];
     vm.updateTask = updateTask;
     vm.openModal = openModal;
     vm.deleteTask = deleteTask;
+
+    vm.onDragStart = function(data, dragElement, event) {
+
+    };
+
+    vm.onDragEnd = function(data, dragElement, event) {
+
+    };
+
+    vm.onDragOver = function(data, dragElement, event) {
+
+    };
+
+    vm.onDrop = function(data, dragElement, dropElement, event) {
+      if (data) {
+        var currentTask = angular.element(dragElement.el).scope().task;
+        currentTask.status = +dropElement.el[0].dataset.status;
+        //$scope.models.basket.push(data);
+        //$scope.remove($scope.models.cars, data);
+      }
+    };
 
     sampleService.getTasks('tmp/tasks.json')
       .success(function (response) {
@@ -50,22 +75,22 @@
           columnElementsById.push(document.getElementById(column.id));
         })
 
-        dragula(columnElementsById, {
-          moves: function (el, container, handle) {
-            loggerService.log('moves: ' + el + ' ' + container.id + ' ' +  handle);
-            return true;         // elements are always draggable by default
-          },
-          accepts: function (el, target, source, sibling) {
-            loggerService.log('accepts: ' + el + ' from:' + target.id + ' to: ' + source.id);
-            return true;         // elements are always draggable by default
-          }
-          }).on('drop', function (el, container, source) {
-            // here we can handle
-            var currentTask = angular.element(el).scope().task;
-            var newStatus = container.id.replace('_column', '').replace('_', ' ');
-            vm.updateTask(currentTask, { status : newStatus})
-            loggerService.log('drop: ' + el + ' from:' + source.id + ' to: ' + container.id);
-        });
+        //dragula(columnElementsById, {
+        //  moves: function (el, container, handle) {
+        //    loggerService.log('moves: ' + el + ' ' + container.id + ' ' +  handle);
+        //    return true;         // elements are always draggable by default
+        //  },
+        //  accepts: function (el, target, source, sibling) {
+        //    loggerService.log('accepts: ' + el + ' from:' + target.id + ' to: ' + source.id);
+        //    return true;         // elements are always draggable by default
+        //  }
+        //  }).on('drop', function (el, container, source) {
+        //    // here we can handle
+        //    var currentTask = angular.element(el).scope().task;
+        //    var newStatus = container.id.replace('_column', '').replace('_', ' ');
+        //    vm.updateTask(currentTask, { status : newStatus})
+        //    loggerService.log('drop: ' + el + ' from:' + source.id + ' to: ' + container.id);
+        //});
       })
       .error(function (err) {
         loggerService.log('error: ' + err);
@@ -97,7 +122,8 @@
                   id: '2000',
                   header:'Моя новая задача',
                   description: 'Описание моей новой задачи',
-                  status: 'submitted',
+                  status: 0,
+                  "statusDescr" : "submitted",
                   priority:'normal',
                   _isNew: true // mark the task as a new
               };

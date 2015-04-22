@@ -4,28 +4,32 @@
       "id" : "1000",
       "header": "Header Task 1",
       "description" : "Very very very very very very very very very long crazy description some difficult Task 1",
-      "status" : "submitted",
+      "status" : 0,
+      "statusDescr" : "submitted",
       "priority" : "Normal"
     },
     {
       "id" : "1001",
       "header": "Header Task 2",
       "description" : "Very very very very very very very very very long crazy description some difficult Task 2",
-      "status" : "open",
+      "status" : 1,
+      "statusDescr" : "open",
       "priority" : "Normal"
     },
     {
       "id" : "1002",
       "header": "Header Task 3",
       "description" : "Very very very very very very very very very long crazy description some difficult Task 3",
-      "status" : "in progress",
+      "status" : 2,
+      "statusDescr" : "in progress",
       "priority" : "Normal"
     },
     {
       "id" : "1003",
       "header": "Header Task 4",
       "description" : "Very very very very very very very very very long crazy description some difficult Task 4",
-      "status" : "fixed",
+      "status" : 3,
+      "statusDescr" : "fixed",
       "priority" : "Normal"
     }
   ]

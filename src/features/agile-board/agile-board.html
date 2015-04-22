@@ -40,19 +40,28 @@
         </td>
     </tr>
     <tr>
-        <td id="{{column.id}}" class="agile-board__column" ng-repeat="column in vm.columns">
-            <div ng-repeat="task in vm.tasks | filter:{ status: column.id.replace('_column', '').replace('_', ' ') }" class="agile-board__task">
+        <td id="{{column.id}}" class="agile-board__column"
+            ad-drop="true"
+            ad-drop-over="vm.onDragOver($data, $dragElement, $dropElement, $event);"
+            ad-drop-end="vm.onDrop($data, $dragElement, $dropElement, $event);"
+            data-status ="{{column.status}}"
+            ng-repeat="column in vm.columns">
+            <div
+                ad-drag="true"
+                ad-drag-data="task"
+                ad-drag-begin="vm.onDragStart($data, $dragElement, $event);"
+                ad-drag-end="vm.onDataEnd($data, $dragElement, $event);"
+                ng-repeat="task in vm.tasks | filter:{ status: column.status }" class="agile-board__task">
                 <div class="agile-board__task-title">
                     <a class="agile-board__task-ref" href="/tasks/{{task.id}}">{{task.id}}</a> <span class="agile-board__task-title-separator"></span> {{task.priority}}
                     <div class="agile-board__task-btn-container">
-                        <button class="agile-board__task-edit-btn">
-                            <span class="glyphicon glyphicon-pencil" ng-click="vm.openModal(task)" ></span>
+                        <button type="button" class="agile-board__task-edit-btn" ng-click="vm.openModal(task)" >
+                            <span class="glyphicon glyphicon-pencil" ></span>
                         </button>
-                        <button class="agile-board__task-edit-btn">
-                            <span class="glyphicon glyphicon-trash" ng-click="vm.deleteTask(task)" ></span>
+                        <button type="button"  class="agile-board__task-edit-btn" ng-click="vm.deleteTask(task)">
+                            <span class="glyphicon glyphicon-trash"  ></span>
                         </button>
                     </div>
-
                 </div>
                 <div class="agile-board__task-header">
                     {{task.header}}
