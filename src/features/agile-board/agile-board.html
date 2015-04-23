@@ -57,7 +57,7 @@
                     ad-drag="true"
                     ad-drag-data="task"
                     ad-drag-begin="vm.onDragStart($data, $dragElement, $event);"
-                    ad-drag-end="vm.onDataEnd($data, $dragElement, $event);">
+                    ad-drag-end="vm.onDragEnd($data, $dragElement, $event);">
                     <div class="agile-board__task-title">
                         <a class="agile-board__task-ref" href="/tasks/{{task.id}}">{{task.id}}</a> <span class="agile-board__task-title-separator"></span> {{task.priority}}
                     </div>
