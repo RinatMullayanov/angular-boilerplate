@@ -5,11 +5,13 @@
       .module('rm.agile-board')
       .directive('rmAgileBoardTask', agileBoardTask);
 
-  function agileBoardTask() {
+  var taskTemplateUrl = 'features/agile-board/agile-board__task/agile-board__task.html';
+
+  function agileBoardTask () {
     var directive = {
       scope: {
         task: '=task',
-        tasks: '=tasks'
+        rootvm: '=rootvm'
       },
       templateUrl: 'features/agile-board/agile-board__task/agile-board__task.html',
       restrict: 'EA',
@@ -21,12 +23,16 @@
 
   }
 
-  AgileBoardTaskController.$inject = ['$scope', '$modal', 'sampleService', 'loggerService']; // manually identify dependencies for Angular components
-  function AgileBoardTaskController ($scope, $modal, sampleService, loggerService) {
+  AgileBoardTaskController.$inject = ['$scope', '$modal',  '$compile', '$templateCache', 'sampleService', 'loggerService']; // manually identify dependencies for Angular components
+  function AgileBoardTaskController ($scope, $modal,  $compile, $templateCache, sampleService, loggerService) {
     var vm = this;
     vm.openModal = openModal;
     vm.deleteTask = deleteTask;
+    vm.rootvm.taskCtrl = vm;
+    vm.tasks = vm.rootvm.tasks;
 
+    var td = angular.element('#submitted_column'); // first column
+    var taskTemplate = $templateCache.get(taskTemplateUrl);
 
     function openModal (currentTask, size) {
       var modalInstance = $modal.open({
@@ -56,16 +62,21 @@
         if(task._isNew) {
           delete  task._isNew;
           vm.tasks.push(task);
+          var taskIntance = $compile(taskTemplate)(vm);
+          //var newElement = angular.element(taskIntance);
+          //var test = angular.element('.agile-board__column')[0];
+          td.append(taskIntance[1]);
         }
       }, function () {
         loggerService.log('Modal dismissed at: ' + new Date());
       });
     }
 
-    function deleteTask(selectedTask) {
+    function deleteTask (selectedTask) {
       var index = vm.tasks.indexOf(selectedTask);
       if (index > -1) {
         vm.tasks.splice(index, 1);
+        angular.element('#' + selectedTask.id).remove();
       }
     }
   }
