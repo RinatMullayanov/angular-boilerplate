@@ -5,7 +5,7 @@
     .module('rm.agile-board')
     .directive('rmAgileBoard', agileBoard);
 
-  function agileBoard() {
+  function agileBoard () {
     var directive = {
       scope: {
         demoOneWayTextBinding: '@one',

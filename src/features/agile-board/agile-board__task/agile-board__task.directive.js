@@ -36,6 +36,12 @@
     var taskTemplate = $templateCache.get(taskTemplateUrl);
 
     function openModal (currentTask, size) {
+
+      var tasksId = vm.tasks.map(function(task) {
+        return +task.id;
+      });
+      var maxTaskId = Math.max.apply(null, tasksId);
+
       var modalInstance = $modal.open({
         templateUrl: 'agile-board__task-model.html',
         controller: 'TaskModalController',
@@ -47,7 +53,7 @@
             return !!currentTask
                 ? currentTask
                 : {
-              id: '2000',
+              id: maxTaskId + 1,
               header:'Моя новая задача',
               description: 'Описание моей новой задачи',
               status: 'submitted',
@@ -72,8 +78,9 @@
             deleteTask: deleteTask
           };
 
-          var taskInstance = $compile(taskTemplate[1])(newScope);
-          td.append(taskInstance);
+          var linkFn = $compile(taskTemplate[1]);
+          var taskContent = linkFn(newScope);
+          td.append(taskContent);
         }
       }, function () {
         loggerService.log('Modal dismissed at: ' + new Date());
