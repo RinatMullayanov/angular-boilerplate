@@ -40,6 +40,7 @@
   color: #64992c !important;
   background: #ebf4dd;
   font-size: 12px;
+  height: 25px;
 }
 .agile-board__task-title-separator {
   float: left;

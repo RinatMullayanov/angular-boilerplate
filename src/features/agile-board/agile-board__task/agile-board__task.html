@@ -1,0 +1,21 @@
+<div class="agile-board__task">
+  <div class="agile-board__task-title">
+    <a class="agile-board__task-ref" href="/tasks/{{vm.task.id}}">{{vm.task.id}}</a>
+    <span class="agile-board__task-title-separator"></span> {{task.priority}}
+    <div class="agile-board__task-btn-container">
+      <button class="agile-board__task-edit-btn">
+        <span class="glyphicon glyphicon-pencil" ng-click="vm.openModal(vm.task)" ></span>
+      </button>
+      <button class="agile-board__task-edit-btn">
+        <span class="glyphicon glyphicon-trash" ng-click="vm.deleteTask(vm.task)" ></span>
+      </button>
+    </div>
+  </div>
+  <div class="agile-board__task-header">
+    {{vm.task.header}}
+  </div>
+  <div class="agile-board__task-descr">
+    {{vm.task.description}}
+  </div>
+  <hr/>
+</div>

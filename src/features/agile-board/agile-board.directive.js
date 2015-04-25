@@ -38,8 +38,6 @@
         title: 'Fixed'
     }];
     vm.updateTask = updateTask;
-    vm.openModal = openModal;
-    vm.deleteTask = deleteTask;
 
     sampleService.getTasks('tmp/tasks.json')
       .success(function (response) {
@@ -48,7 +46,7 @@
         var columnElementsById = [];
         vm.columns.forEach(function(column) {
           columnElementsById.push(document.getElementById(column.id));
-        })
+        });
 
         dragula(columnElementsById, {
           moves: function (el, container, handle) {
@@ -63,7 +61,7 @@
             // here we can handle
             var currentTask = angular.element(el).scope().task;
             var newStatus = container.id.replace('_column', '').replace('_', ' ');
-            vm.updateTask(currentTask, { status : newStatus})
+            vm.updateTask(currentTask, { status : newStatus});
             loggerService.log('drop: ' + el + ' from:' + source.id + ' to: ' + container.id);
         });
       })
@@ -71,7 +69,7 @@
         loggerService.log('error: ' + err);
       });
 
-    function updateTask(oldTask, changes) {
+    function updateTask (oldTask, changes) {
       loggerService.log('old task: ' + JSON.stringify(oldTask));
       for (var prop in changes) {
         if (changes.hasOwnProperty(prop)) {
@@ -82,45 +80,6 @@
       // here will be invoke service method for update task in the database
     }
 
-    function openModal (currentTask, size) {
-      var modalInstance = $modal.open({
-        templateUrl: 'agile-board__task-model.html',
-        controller: 'TaskModalController',
-        controllerAs: 'vm',
-        size: size,
-        // members that will be resolved and passed to the controller as locals
-        resolve: {
-          task: function () {
-            return !!currentTask
-              ? currentTask
-              : {
-                  id: '2000',
-                  header:'Моя новая задача',
-                  description: 'Описание моей новой задачи',
-                  status: 'submitted',
-                  priority:'normal',
-                  _isNew: true // mark the task as a new
-              };
-          }
-        }
-      });
 
-      modalInstance.result.then(function (task) {
-        // here added logic - what to do when you close the modal window
-        if(task._isNew) {
-          delete  task._isNew;
-          vm.tasks.push(task);
-        }
-      }, function () {
-        loggerService.log('Modal dismissed at: ' + new Date());
-      });
-    }
-
-    function deleteTask(selectedTask) {
-      var index = vm.tasks.indexOf(selectedTask);
-      if (index > -1) {
-        vm.tasks.splice(index, 1);
-      }
-    }
   }
 })();
