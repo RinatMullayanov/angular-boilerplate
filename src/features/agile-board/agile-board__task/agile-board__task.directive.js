@@ -10,6 +10,7 @@
   function agileBoardTask () {
     var directive = {
       scope: {
+        firstcolumnid: '@firstcolumnid',
         task: '=task',
         rootvm: '=rootvm'
       },
@@ -31,7 +32,7 @@
     vm.rootvm.taskCtrl = vm;
     vm.tasks = vm.rootvm.tasks;
 
-    var td = angular.element('#submitted_column'); // first column
+    var td = angular.element('#' + vm.firstcolumnid); // first column where we will insert
     var taskTemplate = $templateCache.get(taskTemplateUrl);
 
     function openModal (currentTask, size) {
@@ -62,10 +63,17 @@
         if(task._isNew) {
           delete  task._isNew;
           vm.tasks.push(task);
-          var taskIntance = $compile(taskTemplate)(vm);
-          //var newElement = angular.element(taskIntance);
-          //var test = angular.element('.agile-board__column')[0];
-          td.append(taskIntance[1]);
+
+          // because we are in last task
+          var newScope = $scope.$new(true);
+          newScope.vm = {
+            task: task,
+            openModal: openModal,
+            deleteTask: deleteTask
+          };
+
+          var taskInstance = $compile(taskTemplate[1])(newScope);
+          td.append(taskInstance);
         }
       }, function () {
         loggerService.log('Modal dismissed at: ' + new Date());

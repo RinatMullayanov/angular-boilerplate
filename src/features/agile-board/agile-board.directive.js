@@ -59,7 +59,7 @@
           }
           }).on('drop', function (el, container, source) {
             // here we can handle
-            var currentTask = angular.element(el).scope().task;
+            var currentTask = angular.element(el).scope().task || angular.element(el).scope().vm.task;
             var newStatus = container.id.replace('_column', '').replace('_', ' ');
             vm.updateTask(currentTask, { status : newStatus});
             loggerService.log('drop: ' + el + ' from:' + source.id + ' to: ' + container.id);
