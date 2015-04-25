@@ -21,17 +21,14 @@
 .agile-board__task-btn-container {
   float: right;
 }
-.agile-board__task-edit-btn {
+.agile-board__task-edit-btn,
+.agile-board__task-edit-btn:hover {
   padding: 0;
   margin-left: 5px;
   background: none;
   border: none;
 }
 .agile-board__task-edit-btn:hover {
-  padding: 0;
-  margin-left: 5px;
-  background: none;
-  border: none;
   color: #f00;
 }
 .agile-board__task-ref {
