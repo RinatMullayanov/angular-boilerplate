@@ -22,11 +22,11 @@
         </div>
     </script>
 </div>
-<table class="table">
+<table class="table agile-board">
     <caption>Agile Board</caption>
     <thead>
-    <tr>
-        <th ng-repeat="column in vm.columns">{{column.title}}</th>
+    <tr class="agile-board__header">
+        <th class="agile-board__header-column" ng-repeat="column in vm.columns">{{column.title}}</th>
     </tr>
     </thead>
     <tbody>
@@ -43,7 +43,8 @@
         <td id="{{column.id}}" class="agile-board__column" ng-repeat="column in vm.columns">
             <div ng-repeat="task in vm.tasks | filter:{ status: column.id.replace('_column', '').replace('_', ' ') }" class="agile-board__task">
                 <div class="agile-board__task-title">
-                    <a class="agile-board__task-ref" href="/tasks/{{task.id}}">{{task.id}}</a> <span class="agile-board__task-title-separator"></span> {{task.priority}}
+                    <a class="agile-board__task-ref" href="/tasks/{{task.id}}">{{task.id}}</a>
+                    <span class="agile-board__task-title-separator"></span> {{task.priority}}
                     <div class="agile-board__task-btn-container">
                         <button class="agile-board__task-edit-btn">
                             <span class="glyphicon glyphicon-pencil" ng-click="vm.openModal(task)" ></span>
