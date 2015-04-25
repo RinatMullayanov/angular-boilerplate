@@ -12,6 +12,7 @@
   margin-left: 5px;
 }
 .agile-board__task {
+  height: 150px;
   padding: 0;
   margin-top: 7px;
   background-color: #fff;
