@@ -17,7 +17,7 @@ var config = {
   status: 'dev',
   liveReloadPort: 35729,
   siteDir: 'src',
-  stylusPath: ['./src/css/*.styl', './src/features/*/*.styl'],
+  stylusPath: ['./src/css/*.styl', './src/features/**/*.styl'],
   cssRootPath: './src/css/'
 };
 var livereloadServer;
