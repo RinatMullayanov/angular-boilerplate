@@ -6,5 +6,5 @@
       'ngRoute',
       'ui.bootstrap',
       'rm.agile-board'
-    ])
+    ]);
 })();
