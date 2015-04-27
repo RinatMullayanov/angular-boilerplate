@@ -21,8 +21,8 @@
 
   }
 
-  AgileBoardController.$inject = ['$scope', '$modal', 'sampleService', 'loggerService']; // manually identify dependencies for Angular components
-  function AgileBoardController ($scope, $modal, sampleService, loggerService) {
+  AgileBoardController.$inject = ['$scope', '$modal', '$compile', '$templateCache', 'sampleService', 'loggerService']; // manually identify dependencies for Angular components
+  function AgileBoardController ($scope, $modal, $compile, $templateCache, sampleService, loggerService) {
     var vm = this;
     vm.columns = [{
         id: 'submitted_column',
@@ -38,6 +38,8 @@
         title: 'Fixed'
     }];
     vm.updateTask = updateTask;
+    vm.openModal = openModal;
+    vm.deleteTask = deleteTask;
 
     sampleService.getTasks('tmp/tasks.json')
       .success(function (response) {
@@ -78,6 +80,68 @@
       }
       loggerService.log('new task: ' + JSON.stringify(oldTask));
       // here will be invoke service method for update task in the database
+    }
+
+    function openModal (currentTask, size) {
+
+      var tasksId = vm.tasks.map(function(task) {
+        return +task.id;
+      });
+      var maxTaskId = Math.max.apply(null, tasksId);
+
+      var modalInstance = $modal.open({
+        templateUrl: 'agile-board__task-model.html',
+        controller: 'TaskModalController',
+        controllerAs: 'vm',
+        size: size,
+        // members that will be resolved and passed to the controller as locals
+        resolve: {
+          task: function () {
+            return !!currentTask
+              ? currentTask
+              : {
+              id: maxTaskId + 1,
+              header:'Моя новая задача',
+              description: 'Описание моей новой задачи',
+              status: 'submitted',
+              priority:'normal',
+              _isNew: true // mark the task as a new
+            };
+          }
+        }
+      });
+
+      modalInstance.result.then(function (task) {
+        // here added logic - what to do when you close the modal window
+        if(task._isNew) {
+          delete  task._isNew;
+          vm.tasks.push(task);
+
+          // because we are in last task
+          var newScope = $scope.$new(true);
+          newScope.vm = {
+            task: task,
+            openModal: openModal,
+            deleteTask: deleteTask
+          };
+
+          var taskTemplate = $templateCache.get('features/agile-board/agile-board__task/agile-board__task.html');
+          var linkFn = $compile(taskTemplate[1]);
+          var taskContent = linkFn(newScope);
+          var td = angular.element('#' + vm.columns[0].id); // first column where we will insert
+          td.append(taskContent);
+        }
+      }, function () {
+        loggerService.log('Modal dismissed at: ' + new Date());
+      });
+    }
+
+    function deleteTask (selectedTask) {
+      var index = vm.tasks.indexOf(selectedTask);
+      if (index > -1) {
+        vm.tasks.splice(index, 1);
+        angular.element('#' + selectedTask.id).remove();
+      }
     }
 
 
