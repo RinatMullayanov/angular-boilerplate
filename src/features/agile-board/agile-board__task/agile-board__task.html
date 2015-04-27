@@ -1,7 +1,7 @@
 <div class="agile-board__task" id="{{vm.task.id}}">
   <div class="agile-board__task-title">
     <a class="agile-board__task-ref" href="/tasks/{{vm.task.id}}">{{vm.task.id}}</a>
-    <span class="agile-board__task-title-separator"></span> {{task.priority}}
+    <span class="agile-board__task-title-separator"></span> {{vm.task.priority}}
     <div class="agile-board__task-btn-container">
       <button class="agile-board__task-edit-btn">
         <span class="glyphicon glyphicon-pencil" ng-click="vm.openModal(vm.task)" ></span>
