@@ -26,17 +26,22 @@
     var vm = this;
     vm.columns = [{
         id: 'submitted_column',
-        title: 'Submitted'
+        title: 'Submitted',
+        status : 'submitted'
       }, {
         id: 'open_column',
-        title: 'Open'
+        title: 'Open',
+        status : 'open'
       }, {
         id: 'in_progress_column',
-        title: 'In progress'
+        title: 'In progress',
+        status : 'in progress'
       }, {
         id: 'fixed_column',
-        title: 'Fixed'
+        title: 'Fixed',
+        status : 'fixed'
     }];
+    
     vm.updateTask = updateTask;
     vm.openModal = openModal;
     vm.deleteTask = deleteTask;
@@ -62,8 +67,7 @@
           }).on('drop', function (el, container, source) {
             // here we can handle
             var currentTask = angular.element(el).scope().task || angular.element(el).scope().vm.task;
-            var newStatus = container.id.replace('_column', '').replace('_', ' ');
-            vm.updateTask(currentTask, { status : newStatus});
+            vm.updateTask(currentTask, { status : container.dataset.status});
             $log.log('drop: ' + el + ' from:' + source.id + ' to: ' + container.id);
         });
       })

@@ -40,7 +40,7 @@
         </td>
     </tr>
     <tr>
-        <td id="{{column.id}}" class="agile-board__column" ng-repeat="column in vm.columns">
+        <td id="{{column.id}}" data-status="{{column.status}}" class="agile-board__column" ng-repeat="column in vm.columns">
             <!--:: - one time binding. In this scenario adding an item will not be reflected, but changing an existing item will be reflected-->
             <div class="agile-board__task-layout" ng-repeat="task in ::vm.tasks | filter:{ status: column.id.replace('_column', '').replace('_', ' ') }">
               <rm-agile-board-task task="task"/>
