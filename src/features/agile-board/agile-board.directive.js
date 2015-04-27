@@ -8,8 +8,8 @@
   function agileBoard () {
     var directive = {
       scope: {
-        demoOneWayTextBinding: '@one',
-        demoTwoWayBinding: '=two'
+        //demoOneWayTextBinding: '@one',
+        //demoTwoWayBinding: '=two'
       },
       templateUrl: 'features/agile-board/agile-board.html',
       restrict: 'EA',
