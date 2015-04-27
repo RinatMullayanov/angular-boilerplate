@@ -1,8 +1,10 @@
 var gulp = require('gulp');
+var clean = require('gulp-clean');
+var order = require('gulp-order');
 var concat = require('gulp-concat');
 var rename = require('gulp-rename');
 // for js
-var ngmin = require('gulp-ngmin');
+var ngAnnotate = require('gulp-ng-annotate');
 var uglify = require('gulp-uglify');
 // css
 var stylus = require('gulp-stylus');
@@ -17,8 +19,10 @@ var config = {
   status: 'dev',
   liveReloadPort: 35729,
   siteDir: 'src',
-  stylusPath: ['./src/css/*.styl', './src/features/*/*.styl'],
-  cssRootPath: './src/css/'
+  stylusPath: ['./src/css/*.styl', './src/features/**/*.styl'],
+  cssDistPath: './dist/css/',
+  jsPath: ['./src/*.js', './src/features/*/*.js', './src/features/agile-board/agile-board__task/*.js'],
+  jsDistPath: './dist/js/'
 };
 var livereloadServer;
 
@@ -59,14 +63,31 @@ gulp.task('css-dev', function () {
 });
 
 gulp.task('js-prod', function () {
-  //gulp.src('collapseCheckbox.js')
-  //  .pipe(gulp.dest('../dist/js/'));
-  //
-  //gulp.src('collapseCheckbox.js')
-  //  .pipe(ngmin()) // pre-minify AngularJS apps
-  //  .pipe(uglify())
-  //  .pipe(rename('collapseCheckbox.min.js'))
-  //  .pipe(gulp.dest('../dist/js/'));
+  gulp.src(config.jsPath, function (er, files) {
+    // files is an array of filenames.
+    // If the `nonull` option is set, and nothing
+    // was found, then files is ["**/*.js"]
+    // er is an error object or null.
+    console.log(files);
+  })
+    .pipe(order([
+        'app.module.js',
+        'app.config.js',
+        'app.service.js',
+        'app.controller.js',
+        'app.filter.js',
+        '**/agile-board.module.js',
+        '**/agile-board.service.js',
+        '**/agile-board.directive.js',
+        '**/agile-board.controller.js',
+        '**/agile-board__task.directive.js'
+      ]))
+    .pipe(concat('app.concat.js')) // first concat in one file that mixins to be globally visible
+    //.pipe(ngAnnotate()) // pre-minify AngularJS apps, BUT DON'T USE IF YOU MANUAL USE $inject
+    // generally it is always better to use the manual $inject
+    .pipe(uglify())
+    .pipe(rename('app.min.js'))
+    .pipe(gulp.dest(config.jsDistPath));
 });
 
 gulp.task('css-prod', function () {
@@ -81,7 +102,7 @@ gulp.task('css-prod', function () {
   .pipe(stylus({compress: true}))
   .pipe(rename('app.min.css'))
   .pipe(autoprefixer())
-  .pipe(gulp.dest(config.cssRootPath));
+  .pipe(gulp.dest(config.cssDistPath));
 });
 
 gulp.task('watch', ['server'], function () {

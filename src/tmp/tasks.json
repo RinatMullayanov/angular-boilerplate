@@ -1,28 +1,28 @@
 {
   "tasks" : [
     {
-      "id" : "1000",
+      "id" : 1000,
       "header": "Header Task 1",
       "description" : "Very very very very very very very very very long crazy description some difficult Task 1",
       "status" : "submitted",
       "priority" : "Normal"
     },
     {
-      "id" : "1001",
+      "id" : 1001,
       "header": "Header Task 2",
       "description" : "Very very very very very very very very very long crazy description some difficult Task 2",
       "status" : "open",
       "priority" : "Normal"
     },
     {
-      "id" : "1002",
+      "id" : 1002,
       "header": "Header Task 3",
       "description" : "Very very very very very very very very very long crazy description some difficult Task 3",
       "status" : "in progress",
       "priority" : "Normal"
     },
     {
-      "id" : "1003",
+      "id" : 1003,
       "header": "Header Task 4",
       "description" : "Very very very very very very very very very long crazy description some difficult Task 4",
       "status" : "fixed",
