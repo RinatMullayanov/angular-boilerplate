@@ -10,6 +10,7 @@
       scope: {
         //demoOneWayTextBinding: '@one',
         //demoTwoWayBinding: '=two'
+        columns: '=columns' // column definition
       },
       templateUrl: 'features/agile-board/agile-board.html',
       restrict: 'EA',
@@ -24,23 +25,6 @@
   AgileBoardController.$inject = ['$scope', '$modal', '$log', '$compile', '$templateCache', 'sampleService']; // manually identify dependencies for Angular components
   function AgileBoardController ($scope, $modal, $log, $compile, $templateCache, sampleService) {
     var vm = this;
-    vm.columns = [{
-        id: 'submitted_column',
-        title: 'Submitted',
-        status : 'submitted'
-      }, {
-        id: 'open_column',
-        title: 'Open',
-        status : 'open'
-      }, {
-        id: 'in_progress_column',
-        title: 'In progress',
-        status : 'in progress'
-      }, {
-        id: 'fixed_column',
-        title: 'Fixed',
-        status : 'fixed'
-    }];
     
     vm.updateTask = updateTask;
     vm.openModal = openModal;
@@ -51,25 +35,30 @@
         vm.tasks = response.tasks;
 
         var columnElementsById = [];
-        vm.columns.forEach(function(column) {
-          columnElementsById.push(document.getElementById(column.id));
-        });
+        if(vm.columns) {
+          vm.columns.forEach(function (column) {
+            columnElementsById.push(document.getElementById(column.id));
+          });
 
-        dragula(columnElementsById, {
-          moves: function (el, container, handle) {
-            $log.log('moves: ' + el + ' ' + container.id + ' ' +  handle);
-            return true;         // elements are always draggable by default
-          },
-          accepts: function (el, target, source, sibling) {
-            $log.log('accepts: ' + el + ' from:' + target.id + ' to: ' + source.id);
-            return true;         // elements are always draggable by default
-          }
+          dragula(columnElementsById, {
+            moves: function (el, container, handle) {
+              $log.log('moves: ' + el + ' ' + container.id + ' ' +  handle);
+              return true;         // elements are always draggable by default
+            },
+            accepts: function (el, target, source, sibling) {
+              $log.log('accepts: ' + el + ' from:' + target.id + ' to: ' + source.id);
+              return true;         // elements are always draggable by default
+            }
           }).on('drop', function (el, container, source) {
             // here we can handle
             var currentTask = angular.element(el).scope().task || angular.element(el).scope().vm.task;
             vm.updateTask(currentTask, { status : container.dataset.status});
             $log.log('drop: ' + el + ' from:' + source.id + ' to: ' + container.id);
-        });
+          });
+        }
+        else {
+          $log.log('You must specify the column definition for the directive rm-agile-board! (set property columns)');
+        }
       })
       .error(function (err) {
         $log.log('error: ' + err);

@@ -13,8 +13,9 @@
     //  redirectTo: '/search'
     //});
     $routeProvider.when('/home', {
-      templateUrl: 'template/home.html'
-      //controller: 'profileCtrl'
+      templateUrl: 'template/home.html',
+      controller: 'SomeController',
+      controllerAs: 'vm'
     });
     $routeProvider.when('/about', {
       templateUrl: 'template/about.html'
