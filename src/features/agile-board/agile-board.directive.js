@@ -10,7 +10,7 @@
       scope: {
         //demoOneWayTextBinding: '@one',
         //demoTwoWayBinding: '=two'
-        columns: '=columns' // column definition
+        config: '=config' // settings directive
       },
       templateUrl: 'features/agile-board/agile-board.html',
       restrict: 'EA',
@@ -30,13 +30,13 @@
     vm.openModal = openModal;
     vm.deleteTask = deleteTask;
 
-    sampleService.getTasks('tmp/tasks.json')
+    vm.config.service.get('tmp/tasks.json')
       .success(function (response) {
         vm.tasks = response.tasks;
 
         var columnElementsById = [];
-        if(vm.columns) {
-          vm.columns.forEach(function (column) {
+        if(vm.config.columns) {
+          vm.config.columns.forEach(function (column) {
             columnElementsById.push(document.getElementById(column.id));
           });
 
@@ -57,7 +57,7 @@
           });
         }
         else {
-          $log.log('You must specify the column definition for the directive rm-agile-board! (set property columns)');
+          $log.log('You must specify the column definition for the directive rm-agile-board! (set property config.columns)');
         }
       })
       .error(function (err) {
@@ -76,7 +76,6 @@
     }
 
     function openModal (currentTask, size) {
-
       var tasksId = vm.tasks.map(function(task) {
         return +task.id;
       });
@@ -121,7 +120,7 @@
           var taskTemplate = $templateCache.get('features/agile-board/agile-board__task/agile-board__task.html');
           var linkFn = $compile(taskTemplate[1]);
           var taskContent = linkFn(newScope);
-          var td = angular.element('#' + vm.columns[0].id); // first column where we will insert
+          var td = angular.element('#' + vm.config.columns[0].id); // first column where we will insert
           td.append(taskContent);
         }
       }, function () {

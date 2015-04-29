@@ -27,8 +27,8 @@
 
   }
 
-  AgileBoardTaskController.$inject = ['$scope', '$modal', '$log', '$compile', '$templateCache', 'sampleService']; // manually identify dependencies for Angular components
-  function AgileBoardTaskController ($scope, $modal, $log, $compile, $templateCache, sampleService) {
+  AgileBoardTaskController.$inject = ['$scope', '$modal', '$log', '$compile', '$templateCache']; // manually identify dependencies for Angular components
+  function AgileBoardTaskController ($scope, $modal, $log, $compile, $templateCache) {
     var vm = this;
   }
 })();

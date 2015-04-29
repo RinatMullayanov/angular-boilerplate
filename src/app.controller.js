@@ -3,14 +3,18 @@
     .module('app')
     .controller('SomeController', SomeController);
 
-  SomeController.$inject = ['$scope', '$location', '$routeParams'];
-  function SomeController ($scope, $location, $routeParams) {
+  SomeController.$inject = ['$scope', '$location', '$routeParams', 'sampleService'];
+  function SomeController ($scope, $location, $routeParams, sampleService) {
     var vm = this;
     vm.userId = $routeParams.userId;
     vm.currentDate = new Date();
     vm.isOnline = true;
     // settings for agile-board
-    vm.columns = [{
+    vm.config = {
+      service : {
+        get: sampleService.getTasks
+      },
+      columns: [{
         id: 'submitted_column',
         title: 'Submitted',
         status : 'submitted'
@@ -26,7 +30,8 @@
         id: 'fixed_column',
         title: 'Fixed',
         status : 'fixed'
-    }];
+      }]
+    };
   }
 
 })();
