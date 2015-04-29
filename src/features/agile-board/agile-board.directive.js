@@ -65,14 +65,20 @@
       });
 
     function updateTask (oldTask, changes) {
-      $log.log('old task: ' + JSON.stringify(oldTask));
-      for (var prop in changes) {
-        if (changes.hasOwnProperty(prop)) {
-          oldTask[prop] = changes[prop];
-        }
-      }
-      $log.log('new task: ' + JSON.stringify(oldTask));
-      // here will be invoke service method for update task in the database
+      vm.config.service.update(changes)
+        .then(function(response) {
+          $log.log('old task: ' + JSON.stringify(oldTask));
+          for (var prop in changes) {
+            if (changes.hasOwnProperty(prop)) {
+              oldTask[prop] = changes[prop];
+            }
+          }
+          $log.log('new task: ' + JSON.stringify(oldTask));
+          $log.log('update: ' + response.status);
+        })
+        .catch(function(err) {
+          $log.log('update error: ' + err);
+        });
     }
 
     function openModal (currentTask, size) {
@@ -106,22 +112,38 @@
       modalInstance.result.then(function (task) {
         // here added logic - what to do when you close the modal window
         if(task._isNew) {
-          delete  task._isNew;
-          vm.tasks.push(task);
+          vm.config.service.add(task)
+            .then(function(response) {
+              delete  task._isNew;
+              vm.tasks.push(task);
 
-          // because we are in last task
-          var newScope = $scope.$new(true);
-          newScope.vm = {
-            task: task,
-            openModal: openModal,
-            deleteTask: deleteTask
-          };
+              // because we are in last task
+              var newScope = $scope.$new(true);
+              newScope.vm = {
+                task: task,
+                openModal: openModal,
+                deleteTask: deleteTask
+              };
 
-          var taskTemplate = $templateCache.get('features/agile-board/agile-board__task/agile-board__task.html');
-          var linkFn = $compile(taskTemplate[1]);
-          var taskContent = linkFn(newScope);
-          var td = angular.element('#' + vm.config.columns[0].id); // first column where we will insert
-          td.append(taskContent);
+              var taskTemplate = $templateCache.get('features/agile-board/agile-board__task/agile-board__task.html');
+              var linkFn = $compile(taskTemplate[1]);
+              var taskContent = linkFn(newScope);
+              var td = angular.element('#' + vm.config.columns[0].id); // first column where we will insert
+              td.append(taskContent);
+              $log.log('add: ' + response.status);
+            })
+            .catch(function(err) {
+              $log.log('add error: ' + err);
+            });
+        }
+        else {
+          vm.config.service.update(task)
+            .then(function(response) {
+              $log.log('update: ' + response.status);
+            })
+            .catch(function(err) {
+              $log.log('update error: ' + err);
+            });
         }
       }, function () {
         $log.log('Modal dismissed at: ' + new Date());
@@ -129,13 +151,20 @@
     }
 
     function deleteTask (selectedTask) {
-      var index = vm.tasks.indexOf(selectedTask);
-      if (index > -1) {
-        vm.tasks.splice(index, 1);
-        angular.element('#' + selectedTask.id).remove();
-      }
-    }
+      vm.config.service.delete(selectedTask)
+        .then(function(response) {
+          var index = vm.tasks.indexOf(selectedTask);
+          if (index > -1) {
+            vm.tasks.splice(index, 1);
+            angular.element('#' + selectedTask.id).remove();
+          }
+          $log.log('delete: ' + response.status);
+        })
+        .catch(function (err) {
+          $log.log('delete error: ' + err);
+        });
 
+    }
 
   }
 })();

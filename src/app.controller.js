@@ -12,7 +12,10 @@
     // settings for agile-board
     vm.config = {
       service : {
-        get: sampleService.getTasks
+        get: sampleService.getTasks,
+        add: sampleService.addTask,
+        update: sampleService.updateTask,
+        delete: sampleService.deleteTask
       },
       columns: [{
         id: 'submitted_column',
