@@ -5,7 +5,7 @@
       .module('rm.agile-board')
       .directive('rmAgileBoardTask', agileBoardTask);
 
-  var taskTemplateUrl = 'features/agile-board/agile-board__task/agile-board__task.html';
+  var taskTemplateUrl = __dirname + '/features/agile-board/agile-board__task/agile-board__task.html';
 
   function agileBoardTask () {
     var directive = {

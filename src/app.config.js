@@ -7,24 +7,28 @@
   configRoute.$inject = ['$routeProvider', '$locationProvider'];
 
   function configRoute ($routeProvider, $locationProvider) {
-    $locationProvider.html5Mode(true); // to remove the extra # in url
+    //$locationProvider.html5Mode(true); // to remove the extra # in url
+    $locationProvider.html5Mode({
+      enabled: true,
+      requireBase: false
+    });
     //
-    //$routeProvider.when('/', {
-    //  redirectTo: '/search'
-    //});
+    // $routeProvider.when('/', {
+    //  redirectTo: '/home'
+    // });
     $routeProvider.when('/home', {
-      templateUrl: 'template/home.html',
+      templateUrl: __dirname + '/template/home.html',
       controller: 'SomeController',
       controllerAs: 'vm'
     });
     $routeProvider.when('/about', {
-      templateUrl: 'template/about.html'
+      templateUrl: __dirname + '/template/about.html'
     });
     $routeProvider.when('/contact', {
-      templateUrl: 'template/contact.html'
+      templateUrl: __dirname + '/template/contact.html'
     });
     $routeProvider.when('/user/:userId', {
-      templateUrl: 'template/user.html',
+      templateUrl: __dirname + '/template/user.html',
       controller: 'SomeController',
       controllerAs: 'vm'
     });
@@ -37,4 +41,3 @@
     });
   }
 })();
-

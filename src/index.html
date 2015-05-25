@@ -2,7 +2,6 @@
 <html lang="en" ng-app="app">
 <head>
   <meta charset="utf-8">
-  <base href="/">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
@@ -63,6 +62,20 @@
   <script src="bower_components/dragula.js/dist/dragula.js"></script>
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script>
+
+    // hack for http://electron.atom.io/
+    if(typeof __dirname === 'undefined') {
+      window.__dirname = '.';
+    }
+
+    if(typeof require === 'undefined') {
+      window.require = function() {};
+    }else {
+      window.$ = window.jQuery = require('./bower_components/jquery/dist/jquery.js');
+    }
+
+  </script>
   <!-- Include all compiled plugins (below), or include individual files as needed -->
   <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
   <!-- Angular -->

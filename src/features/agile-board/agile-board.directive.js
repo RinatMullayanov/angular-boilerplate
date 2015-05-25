@@ -12,7 +12,7 @@
         //demoTwoWayBinding: '=two'
         config: '=config' // settings directive
       },
-      templateUrl: 'features/agile-board/agile-board.html',
+      templateUrl: __dirname + '/features/agile-board/agile-board.html',
       restrict: 'EA',
       controller: AgileBoardController,
       controllerAs: 'vm', // name of the controller to use to access the properties in the markup directive
@@ -25,12 +25,12 @@
   AgileBoardController.$inject = ['$scope', '$modal', '$log', '$compile', '$templateCache', 'sampleService']; // manually identify dependencies for Angular components
   function AgileBoardController ($scope, $modal, $log, $compile, $templateCache, sampleService) {
     var vm = this;
-    
+
     vm.updateTask = updateTask;
     vm.openModal = openModal;
     vm.deleteTask = deleteTask;
 
-    vm.config.service.get('tmp/tasks.json')
+    vm.config.service.get(__dirname + '/tmp/tasks.json')
       .success(function (response) {
         vm.tasks = response.tasks;
 
@@ -125,7 +125,7 @@
                 deleteTask: deleteTask
               };
 
-              var taskTemplate = $templateCache.get('features/agile-board/agile-board__task/agile-board__task.html');
+              var taskTemplate = $templateCache.get(__dirname + '/features/agile-board/agile-board__task/agile-board__task.html');
               var linkFn = $compile(taskTemplate[1]);
               var taskContent = linkFn(newScope);
               var td = angular.element('#' + vm.config.columns[0].id); // first column where we will insert
