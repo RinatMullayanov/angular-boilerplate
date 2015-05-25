@@ -1,0 +1,18 @@
+{
+  "name": "your-app",
+  "version": "0.0.1",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "buildOsx": "electron-packager . MyAppOsx --platform=darwin --arch=x64 --version=0.26.1",
+    "buildWin": "electron-packager . MyAppWin --platform=win32 --arch=x64 --version=0.26.1",
+    "buildLinux": "electron-packager . MyAppLinux --platform=linux --arch=x64 --version=0.26.1"
+  },
+  "devDependencies": {
+    "electron-packager": "^4.1.1",
+    "electron-prebuilt": "^0.26.1",
+    "grunt": "^0.4.5",
+    "grunt-electron": "^1.0.0",
+    "load-grunt-tasks": "^3.2.0"
+  }
+}
