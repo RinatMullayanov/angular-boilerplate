@@ -126,7 +126,16 @@
               };
 
               var taskTemplate = $templateCache.get('features/agile-board/agile-board__task/agile-board__task.html');
-              var linkFn = $compile(taskTemplate[1]);
+              
+              if (angular.isArray(taskTemplate)) {
+                var linkFn = $compile(taskTemplate[1]);
+
+              } else if (angular.isString(taskTemplate)) {
+                var linkFn = $compile(taskTemplate);
+              } else {
+                  $log.log('error: taskTemplate have wrong type:' + typeof taskTemplate);
+              }
+              
               var taskContent = linkFn(newScope);
               var td = angular.element('#' + vm.config.columns[0].id); // first column where we will insert
               td.append(taskContent);
